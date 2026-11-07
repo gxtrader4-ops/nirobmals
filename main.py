@@ -4,11 +4,11 @@ import sqlite3
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 from pytgcalls import PyTgCalls
-from pytgcalls.types import GroupCallConfig
 
 # ------------------ CONFIGURATION ------------------
-API_ID = 12345678  # my.telegram.org থেকে আপনার API ID দিন
-API_HASH = "YOUR_API_HASH_HERE"  # my.telegram.org থেকে আপনার API HASH দিন
+# এখানে আপনার আসল API_ID এবং API_HASH বসিয়ে দিন (যে অ্যাকাউন্ট দিয়ে লাইভে উঠবেন তার তথ্য)
+API_ID = 12345678  # আপনার my.telegram.org থেকে প্রাপ্ত API ID
+API_HASH = "42f0233fe525aed5338c1251622f2e23"  # আপনার my.telegram.org থেকে প্রাপ্ত API HASH
 
 BOT_TOKEN = "9175270490:AAFuoLJ6XuD_iLMaSfkbYYLYWWmTqL3h-fE"
 ADMIN_ID = 8419760844
