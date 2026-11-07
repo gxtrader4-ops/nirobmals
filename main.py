@@ -34,7 +34,7 @@ conn.commit()
 default_texts = {
     "start_text": "👋 **স্বাগতম!**\n\nআপনি কোন গ্রুপের মধ্যে আমাদের এই বটটি সেটআপ করতে চাচ্ছেন? আপনার **Public Group Link** পাঠাই দিন।",
     "btn_emoji": "🎙️",
-    "connect_msg": "✅ আপনার গ্রুপ লিংক রিসিভ হয়েছে! গ্রুপে বট/অ্যাকাউন্টকে অ্যাডমিন পাওয়ার দিন। ভয়েস লাইভ চালু হলেই অটোমেটিক জয়েন করে সবাইকে Unmute করে দেওয়া হবে।"
+    "connect_msg": "✅ আপনার গ্রুপ লিংক রিসিভ হয়েছে! গ্রুপে বট/অ্যাকাউন্টকে অ্যাডমিন পাওয়ার দিন। ভয়েস লাইভ চালু হলেই অটোমেটিক জয়েন করে সবাইকে Unmute করে দেওয়া হবে।"
 }
 
 for k, v in default_texts.items():
@@ -82,18 +82,18 @@ async def handle_private_messages(client, message: Message):
         if state == "WAIT_START_TEXT":
             set_db("start_text", text)
             del user_states[uid]
-            await message.reply_text("✅ স্টার্ট টেক্সট সফলভাবে আপডেট করা হয়েছে!")
+            await message.reply_text("✅ স্টার্ট টেক্সট সফলভাবে আপডেট করা হয়েছে!")
             return
         elif state == "WAIT_EMOJI":
             set_db("btn_emoji", text)
             del user_states[uid]
-            await message.reply_text(f"✅ বোতাম ইমোজি `{text}` আপডেট করা হয়েছে!")
+            await message.reply_text(f"✅ বোতাম ইমোজি `{text}` আপডেট করা হয়েছে!")
             return
         elif state == "WAIT_SESSION":
             cursor.execute("INSERT INTO user_sessions (session_string) VALUES (?)", (text,))
             conn.commit()
             del user_states[uid]
-            await message.reply_text("✅ নতুন Telegram User Session সফলভাবে যুক্ত হয়েছে!")
+            await message.reply_text("✅ নতুন Telegram User Session সফলভাবে যুক্ত হয়েছে!")
             return
 
     # Group link processing for users
@@ -136,8 +136,8 @@ async def callback_handler(client, query):
 
 async def run_user_account_unmuter():
     """
-    এই ফাংশনটি ডাটাবেজে থাকা ইউজার অ্যাকাউন্টগুলো ব্যাকগ্রাউন্ডে চালিয়ে রাখবে। 
-    লাইভ ভয়েস চ্যাট চালু হলে সাথে সাথে মাইক আনমিউট করবে।
+    এই ফাংশনটি ডাটাবেজে থাকা ইউজার অ্যাকাউন্টগুলো ব্যাকগ্রাউন্ডে চালিয়ে রাখবে। 
+    লাইভ ভয়েস চ্যাট চালু হলে সাথে সাথে মাইক আনমিউট করবে।
     """
     cursor.execute("SELECT session_string FROM user_sessions")
     sessions = cursor.fetchall()
@@ -149,7 +149,7 @@ async def run_user_account_unmuter():
             
             @pytgcalls.on_participant_speaking()
             async def unmute_everyone(app, chat_id, participant):
-                # ভয়েস চ্যাটে কেউ স্পিক বা জয়েন করলে তাকে অটোমেটিক Unmute করবে
+                # ভয়েস চ্যাটে কেউ স্পিক বা জয়েন করলে তাকে অটোমেটিক Unmute করবে
                 try:
                     await user_app.unmute_chat_member(chat_id, participant.user_id)
                 except Exception:
@@ -159,6 +159,7 @@ async def run_user_account_unmuter():
             await pytgcalls.start()
         except Exception as e:
             logging.error(f"Session error: {e}")
+
 # ------------------ RUN BOT ------------------
 
 if __name__ == "__main__":
